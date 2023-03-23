@@ -6,3 +6,7 @@
 	path = lib/openzeppelin-contracts
 	url = https://github.com/Openzeppelin/openzeppelin-contracts
 	branch = v4.8.2
+[submodule "lib/chainlink-brownie-contracts"]
+	path = lib/chainlink-brownie-contracts
+	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
+	branch = 1.2.0
