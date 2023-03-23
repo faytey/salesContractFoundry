@@ -66,33 +66,42 @@ contract PurchaseTest is Test{
     }
 
     function testPurchaseWithUSDC() public {
-        vm.prank(0xaD0135AF20fa82E106607257143d0060A7eB5cBf);
+        vm.startPrank(0xaD0135AF20fa82E106607257143d0060A7eB5cBf);
+        USDC.approve(address(purchase), 4000000000000000000);
         purchase.purchaseWithUSDC(2,1);
+        vm.stopPrank();
         console.log(properties.balanceOf(address(purchase), 2));
     }
     function testPurchaseWithDAI() public {
-        vm.prank(0xaD0135AF20fa82E106607257143d0060A7eB5cBf);
-        // DAI.approve(address(purchase), 4000000000000000000);
-        // DAI.allowance(0xaD0135AF20fa82E106607257143d0060A7eB5cBf,address(purchase));
+        vm.startPrank(0xaD0135AF20fa82E106607257143d0060A7eB5cBf);
+        IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F).approve(address(purchase), 4000000000000000000);
+        DAI.allowance(0xaD0135AF20fa82E106607257143d0060A7eB5cBf,address(purchase));
         purchase.purchaseWithDAI(1,1);
+        vm.stopPrank();
         console.log(properties.balanceOf(address(purchase), 1));
     }
 
     function testPurchaseWithLINK() public {
-        vm.prank(0x41318419CFa25396b47A94896FfA2C77c6434040);
+        vm.startPrank(0x41318419CFa25396b47A94896FfA2C77c6434040);
+        LINK.approve(address(purchase), 4000000000000000000);
         purchase.purchaseWithLINK(2,1);
+        vm.stopPrank();
         console.log(properties.balanceOf(address(purchase), 2));
     }
 
     function testPurchaseWithUSDT() public {
-        vm.prank(0x41318419CFa25396b47A94896FfA2C77c6434040);
+        vm.startPrank(0x41318419CFa25396b47A94896FfA2C77c6434040);
+        USDT.approve(address(purchase), 4000000000000000000);
         purchase.purchaseWithUSDT(1,1);
+        vm.stopPrank();
         console.log(properties.balanceOf(address(purchase), 1));
     }
 
     function testPurchaseWithUNI() public {
-        vm.prank(0x5F246D7D19aA612D6718D27c1dA1Ee66859586b0);
+        vm.startPrank(0x5F246D7D19aA612D6718D27c1dA1Ee66859586b0);
+        UNI.approve(address(purchase), 4000000000000000000);
         purchase.purchaseWithUNI(2,1);
+        vm.stopPrank();
         console.log(properties.balanceOf(address(purchase), 2));
     }
 

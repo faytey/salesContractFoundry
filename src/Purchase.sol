@@ -28,7 +28,7 @@ contract Purchase is ERC1155Holder {
             0x986b5E1e1755e3C2440e960477f25201B0a8bbD4
         ).latestRoundData();
 
-        return basePrice;
+        return basePrice / 100000000;
     }
 
     function getDAI() public view returns (int256) {
@@ -36,7 +36,7 @@ contract Purchase is ERC1155Holder {
             0x773616E4d11A78F511299002da57A0a94577F1f4
         ).latestRoundData();
 
-        return basePrice;
+        return basePrice / 1000000000000000000;
     }
 
     function getLINK() public view returns (int256) {
@@ -44,7 +44,7 @@ contract Purchase is ERC1155Holder {
             0xDC530D9457755926550b59e8ECcdaE7624181557
         ).latestRoundData();
 
-        return basePrice;
+        return basePrice / 1000000000000000000;
     }
 
     function getUNI() public view returns (int256) {
@@ -52,7 +52,7 @@ contract Purchase is ERC1155Holder {
             0xD6aA3D25116d8dA79Ea0246c4826EB951872e02e
         ).latestRoundData();
 
-        return basePrice;
+        return basePrice / 1000000000000000000;
     }
 
     function getUSDT() public view returns (int256) {
@@ -60,7 +60,7 @@ contract Purchase is ERC1155Holder {
             0xEe9F2375b4bdF6387aa8265dD4FB8F16512A1d46
         ).latestRoundData();
 
-        return basePrice;
+        return basePrice / 100000000;
     }
 
     function purchaseWithUSDC(uint _tokenId, int _quantity) external {
