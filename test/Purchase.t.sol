@@ -12,15 +12,21 @@ contract PurchaseTest is Test{
     Purchase public purchase;
     Properties public properties;
     uint256 mainnetFork;
-    // string MAINNET_RPC_URL = vm.envString("MAINNET_RPC_URL");
+    address internal DAI_USER = 0xaD0135AF20fa82E106607257143d0060A7eB5cBf;
 
+    //Supported Tokens
+    IERC20 USDC = IERC20(0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48);
+    IERC20 DAI = IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F);
+    IERC20 LINK = IERC20(0x514910771AF9Ca656af840dff83E8264EcF986CA);
+    IERC20 UNI = IERC20(0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984);
+    IERC20 USDT = IERC20(0xdAC17F958D2ee523a2206206994597C13D831ec7);
 
     address owner = mkaddr("owner");
 
     function setUp() public {
+        mainnetFork = vm.createSelectFork('https://eth-mainnet.g.alchemy.com/v2/lh2i9x_uHZnURi_yOJnAU49bIQWDsJ-w');
         purchase = new Purchase();
         properties = new Properties(address(purchase));
-        mainnetFork = vm.createFork('https://eth-mainnet.g.alchemy.com/v2/lh2i9x_uHZnURi_yOJnAU49bIQWDsJ-w');
     }
 
      function testCanSelectFork() public {
@@ -36,18 +42,10 @@ contract PurchaseTest is Test{
         properties.balanceOf(address(purchase), 2);
     }
 
-    function testGetUSDC() public returns (int256) {
-        testCanSelectFork();
-        (, int256 basePrice, , , ) = AggregatorV3Interface(
-            0x986b5E1e1755e3C2440e960477f25201B0a8bbD4
-        ).latestRoundData();
-
-        return basePrice;
-    }
-
     function testPurchasePropertyWithETH() public {
         vm.deal(owner, 50 ether);
         properties.balanceOf(address(purchase), 1);
+        // vm.prank(0xaD0135AF20fa82E106607257143d0060A7eB5cBf);
         vm.startPrank(owner);
         purchase.purchasePropertyWithETH{value: 7 ether}(1, 2);
         properties.balanceOf(owner, 1);
@@ -58,38 +56,42 @@ contract PurchaseTest is Test{
 
     function testGetPriceFeeds() public {
         testCanSelectFork();
+        vm.startPrank(0xaD0135AF20fa82E106607257143d0060A7eB5cBf);
         purchase.getUSDC();
         purchase.getDAI();
         purchase.getLINK();
         purchase.getUNI();
         purchase.getUSDT();
+        vm.stopPrank();
     }
 
     function testPurchaseWithUSDC() public {
-        vm.prank(owner);
+        vm.prank(0xaD0135AF20fa82E106607257143d0060A7eB5cBf);
         purchase.purchaseWithUSDC(2,1);
         console.log(properties.balanceOf(address(purchase), 2));
     }
     function testPurchaseWithDAI() public {
-        vm.prank(owner);
+        vm.prank(0xaD0135AF20fa82E106607257143d0060A7eB5cBf);
+        // DAI.approve(address(purchase), 4000000000000000000);
+        // DAI.allowance(0xaD0135AF20fa82E106607257143d0060A7eB5cBf,address(purchase));
         purchase.purchaseWithDAI(1,1);
         console.log(properties.balanceOf(address(purchase), 1));
     }
 
     function testPurchaseWithLINK() public {
-        vm.prank(owner);
+        vm.prank(0x41318419CFa25396b47A94896FfA2C77c6434040);
         purchase.purchaseWithLINK(2,1);
         console.log(properties.balanceOf(address(purchase), 2));
     }
 
     function testPurchaseWithUSDT() public {
-        vm.prank(owner);
+        vm.prank(0x41318419CFa25396b47A94896FfA2C77c6434040);
         purchase.purchaseWithUSDT(1,1);
         console.log(properties.balanceOf(address(purchase), 1));
     }
 
     function testPurchaseWithUNI() public {
-        vm.prank(owner);
+        vm.prank(0x5F246D7D19aA612D6718D27c1dA1Ee66859586b0);
         purchase.purchaseWithUNI(2,1);
         console.log(properties.balanceOf(address(purchase), 2));
     }
